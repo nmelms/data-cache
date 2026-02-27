@@ -1,4 +1,6 @@
 import Image from "next/image";
+import CachedData from "./cached-data";
+import RevalidateButton from "./revalidate-button";
 
 export default function Home() {
   return (
@@ -33,6 +35,10 @@ export default function Home() {
             </a>{" "}
             center.
           </p>
+        </div>
+        <div className="flex w-full flex-col gap-4">
+          <CachedData />
+          <RevalidateButton />
         </div>
         <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
           <a
