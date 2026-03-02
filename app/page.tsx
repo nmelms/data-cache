@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Image from "next/image";
 import CachedData from "./cached-data";
 import RevalidateButton from "./revalidate-button";
@@ -37,7 +38,7 @@ export default function Home() {
           </p>
         </div>
         <div className="flex w-full flex-col gap-4">
-          <CachedData />
+          <Suspense><CachedData /></Suspense>
           <RevalidateButton />
         </div>
         <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
