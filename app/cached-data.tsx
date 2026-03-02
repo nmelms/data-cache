@@ -1,10 +1,14 @@
+import { unstable_cacheTag as cacheTag } from "next/cache";
+
 async function getUser() {
   "use cache";
+  cacheTag("user");
   return { name: "Nick", role: "Admin", id: Math.floor(Math.random() * 1000) };
 }
 
 async function getPosts() {
   "use cache";
+  cacheTag("posts");
   return [
     { id: Math.floor(Math.random() * 1000), title: "First post" },
     { id: Math.floor(Math.random() * 1000), title: "Second post" },
@@ -14,6 +18,7 @@ async function getPosts() {
 
 async function getStats() {
   "use cache";
+  cacheTag("stats");
   return {
     views: Math.floor(Math.random() * 100000),
     likes: Math.floor(Math.random() * 5000),
@@ -23,6 +28,7 @@ async function getStats() {
 
 async function getNotifications() {
   "use cache";
+  cacheTag("notifications");
   return {
     count: Math.floor(Math.random() * 20),
     lastChecked: new Date().toLocaleTimeString("en-US", { hour12: false }),
