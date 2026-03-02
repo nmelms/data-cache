@@ -1,14 +1,8 @@
+import { Suspense } from "react";
 import { getUser, getPosts, getStats, getNotifications } from "./data";
 import RevalidateButton from "./revalidate-button";
 
-export default async function DashboardPage() {
-  const [user, posts, stats, notifications] = await Promise.all([
-    getUser(),
-    getPosts(),
-    getStats(),
-    getNotifications(),
-  ]);
-
+export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-zinc-50 p-10 font-sans dark:bg-black">
       <div className="mx-auto max-w-2xl space-y-6">
@@ -18,35 +12,49 @@ export default async function DashboardPage() {
           </h1>
           <RevalidateButton />
         </div>
-
-        <div className="grid grid-cols-2 gap-4">
-          <Card label="User">
-            <p className="font-semibold text-zinc-900 dark:text-zinc-50">{user.name}</p>
-            <p className="text-xs text-zinc-500">{user.role} · #{user.id}</p>
-          </Card>
-
-          <Card label="Notifications">
-            <p className="font-semibold text-zinc-900 dark:text-zinc-50">{notifications.count} unread</p>
-            <p className="text-xs text-zinc-500">at {notifications.lastChecked}</p>
-          </Card>
-
-          <Card label="Posts">
-            <ul className="space-y-1">
-              {posts.map((p) => (
-                <li key={p.id} className="text-xs text-zinc-600 dark:text-zinc-400">
-                  #{p.id} — {p.title}
-                </li>
-              ))}
-            </ul>
-          </Card>
-
-          <Card label="Stats">
-            <p className="text-xs text-zinc-600 dark:text-zinc-400">{stats.views.toLocaleString()} views</p>
-            <p className="text-xs text-zinc-600 dark:text-zinc-400">{stats.likes.toLocaleString()} likes</p>
-            <p className="text-xs text-zinc-600 dark:text-zinc-400">{stats.comments.toLocaleString()} comments</p>
-          </Card>
-        </div>
+        <Suspense>
+          <DashboardData />
+        </Suspense>
       </div>
+    </div>
+  );
+}
+
+async function DashboardData() {
+  const [user, posts, stats, notifications] = await Promise.all([
+    getUser(),
+    getPosts(),
+    getStats(),
+    getNotifications(),
+  ]);
+
+  return (
+    <div className="grid grid-cols-2 gap-4">
+      <Card label="User">
+        <p className="font-semibold text-zinc-900 dark:text-zinc-50">{user.name}</p>
+        <p className="text-xs text-zinc-500">{user.role} · #{user.id}</p>
+      </Card>
+
+      <Card label="Notifications">
+        <p className="font-semibold text-zinc-900 dark:text-zinc-50">{notifications.count} unread</p>
+        <p className="text-xs text-zinc-500">at {notifications.lastChecked}</p>
+      </Card>
+
+      <Card label="Posts">
+        <ul className="space-y-1">
+          {posts.map((p) => (
+            <li key={p.id} className="text-xs text-zinc-600 dark:text-zinc-400">
+              #{p.id} — {p.title}
+            </li>
+          ))}
+        </ul>
+      </Card>
+
+      <Card label="Stats">
+        <p className="text-xs text-zinc-600 dark:text-zinc-400">{stats.views.toLocaleString()} views</p>
+        <p className="text-xs text-zinc-600 dark:text-zinc-400">{stats.likes.toLocaleString()} likes</p>
+        <p className="text-xs text-zinc-600 dark:text-zinc-400">{stats.comments.toLocaleString()} comments</p>
+      </Card>
     </div>
   );
 }
