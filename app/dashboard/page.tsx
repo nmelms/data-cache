@@ -1,5 +1,3 @@
-export const revalidate = 4;
-
 import { getUser, getPosts, getStats, getNotifications } from "./data";
 import RevalidateButton from "./revalidate-button";
 
