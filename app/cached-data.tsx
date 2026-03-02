@@ -3,14 +3,14 @@ import { unstable_cacheTag as cacheTag, unstable_cacheLife as cacheLife } from "
 async function getUser() {
   "use cache";
   cacheTag("user");
-  cacheLife("minutes");
+  cacheLife("seconds");
   return { name: "Nick", role: "Admin", id: Math.floor(Math.random() * 1000) };
 }
 
 async function getPosts() {
   "use cache";
   cacheTag("posts");
-  cacheLife("minutes");
+  cacheLife("seconds");
   return [
     { id: Math.floor(Math.random() * 1000), title: "First post" },
     { id: Math.floor(Math.random() * 1000), title: "Second post" },
@@ -21,7 +21,7 @@ async function getPosts() {
 async function getStats() {
   "use cache";
   cacheTag("stats");
-  cacheLife("minutes");
+  cacheLife("seconds");
   return {
     views: Math.floor(Math.random() * 100000),
     likes: Math.floor(Math.random() * 5000),
@@ -32,7 +32,7 @@ async function getStats() {
 async function getNotifications() {
   "use cache";
   cacheTag("notifications");
-  cacheLife("minutes");
+  cacheLife("seconds");
   return {
     count: Math.floor(Math.random() * 20),
     lastChecked: new Date().toLocaleTimeString("en-US", { hour12: false }),
