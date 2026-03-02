@@ -1,3 +1,5 @@
+export const revalidate = 4;
+
 import Image from "next/image";
 import CachedData from "./cached-data";
 import RevalidateButton from "./revalidate-button";
